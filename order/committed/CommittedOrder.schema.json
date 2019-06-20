@@ -1,0 +1,382 @@
+{
+  "description": "Customer Order submitted with intent of being immediately sent to fulfillment for planning/execution.",
+  "required": [
+    "committedTime",
+    "referenceId",
+    "origin",
+    "targetLocation",
+    "targetContact",
+    "targetTimeRange",
+    "items"
+  ],
+  "type" : "object",
+  "properties" : {
+    "committedTime" : {
+      "description": "ISO-8601 formatted date time string",
+      "type" : "string"
+    },
+    "referenceId" : {
+      "description": "Customer reference to order",
+      "type" : "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "origin" : {
+      "description": "Origin of order submission.  Either originKeys or hubId must be provided",
+      "type" : "object",
+      "required": [
+      ],
+      "properties" : {
+        "originKeys" : {
+          "description": "Customer identifiers that have been agreed with MileZero to identify a hub",
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "hubId" : {
+          "description": "Milezero ID for hub.",
+          "type" : "string"
+        }
+      }
+    },
+    "targetLocation" : {
+      "type" : "object",
+      "required": [
+          "locationType"
+      ],
+      "properties" : {
+        "locationType": {
+          "type": "string",
+          "enum": ["ADDRESS", "GEO", "UNVALIDATED"]
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "commercialType" : {
+          "type" : "string",
+          "enum" : [ "RESIDENTIAL", "BUSINESS" ]
+        },
+        "address" : {
+          "type": "object",
+          "required": [
+            "countryCode",
+            "addressLines"
+          ],
+          "description": "only used if location type is ADDRESS or UNVALIDATED",
+          "properties": {
+            "countryCode": {
+              "type": "string",
+              "description": "standard: ISO 3166-1 alpha-2.  Indicates form of address"
+            },
+            "addressLines": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "used with US/AU/AE/GB country code.  address lines",
+              "minLength": 1,
+              "maxLength": 3
+            },
+            "state": {
+              "type": "string",
+              "description": "used with/required for US/AU/AE country code.  Territory/province/state code."
+            },
+            "postalCode": {
+              "type": "string",
+              "description": "used with/required for US/AU/GB country code.  postal/zip code"
+            },
+            "city": {
+              "type": "string",
+              "description": "used with/required for US/AU/AE country code.  Name of city"
+            },
+            "postTown": {
+              "type": "string",
+              "description": "used with/required for GB country code.  Name of town"
+            },
+            "dependentLocality": {
+              "type": "string",
+              "description": "used with GB country code.  large village name"
+            },
+            "doubleDependentLocality": {
+              "type": "string",
+              "description": "used with GB country code.  small village name"
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "required": [
+            "latitude",
+            "longitude"
+          ],
+          "description": "only used if location type is GEO or UNVALIDATED",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "only used if location type is GEO.  standard: ISO 3166-1 alpha-2"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "only used if location type is UNVALIDATED.  standard: IANA time zone database"
+        },
+        "attributes" : {
+          "type" : "object",
+          "description": "all properties default to false",
+          "properties" : {
+            "stairs" : {
+              "type" : "boolean",
+              "description": "whether location has stair to access"
+            },
+            "restrictedParking" : {
+              "type" : "boolean",
+              "description": "whether location has restricted parking"
+            },
+            "serviceLift" : {
+              "type" : "boolean",
+              "description": "whether location supports/has a service lift"
+            },
+            "sideRearAccess" : {
+              "type" : "boolean",
+              "description": "whether location supports side and/or rear access"
+            },
+            "heavy" : {
+              "type" : "boolean",
+              "description": "whether location supports pickup/delivery of heavy/bulky items"
+            }
+          }
+        }
+      }
+    },
+    "targetContact" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description": "Full Name for point of contact for order"
+        },
+        "email" : {
+          "type" : "string",
+          "description": "Email for point of contact for order"
+        },
+        "phone" : {
+          "type" : "string",
+          "description": "Phone number for point of contact for order"
+        }
+      }
+    },
+    "targetTimeRange" : {
+      "type" : "object",
+      "properties" : {
+        "beginning" : {
+          "type" : "string",
+          "description": "ISO-8601 formatted date time string"
+        },
+        "ending" : {
+          "type" : "string",
+          "description": "ISO-8601 formatted date time string"
+        }
+      }
+    },
+    "orderNotes" : {
+      "type" : "string",
+      "description": "custom notes on order that is passed to delivery association"
+    },
+    "items" : {
+      "type" : "object",
+      "required": [
+        "shipments"
+      ],
+      "properties" : {
+        "shipments" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "required": [
+              "product"
+            ],
+            "properties" : {
+              "product" : {
+                "type" : "object",
+                "required": [
+                  "type",
+                  "quantity"
+                ],
+                "properties" : {
+                  "type" : {
+                    "type" : "object",
+                    "required": [
+                      "referenceId",
+                      "size",
+                      "weight"
+                    ],
+                    "properties" : {
+                      "referenceId" : {
+                        "type" : "string"
+                      },
+                      "size" : {
+                        "type" : "object",
+                        "required": [
+                          "length",
+                          "width",
+                          "depth",
+                          "unit"
+                        ],
+                        "properties" : {
+                          "length" : {
+                            "type" : "number",
+                            "minimum": 0
+                          },
+                          "width" : {
+                            "type" : "number",
+                            "minimum": 0
+                          },
+                          "depth" : {
+                            "type" : "number",
+                            "minimum": 0
+                          },
+                          "unit" : {
+                            "type" : "string",
+                            "enum" : [ "ft", "in", "yd", "mi", "m", "mm", "cm", "km" ]
+                          }
+                        }
+                      },
+                      "weight" : {
+                        "type" : "object",
+                        "required": [
+                          "weightVal",
+                          "unit"
+                        ],
+                        "properties" : {
+                          "weightVal" : {
+                            "type" : "number",
+                            "minimum": 0
+                          },
+                          "unit" : {
+                            "type" : "string",
+                            "enum" : [ "lb", "ton_us", "kg", "g" ]
+                          }
+                        }
+                      },
+                      "enabled" : {
+                        "type" : "boolean"
+                      },
+                      "description" : {
+                        "type" : "string",
+                        "minLength":0,
+                        "maxLength": 200
+                      }
+                    }
+                  },
+                  "quantity" : {
+                    "type" : "integer",
+                    "minimum": 0
+                  },
+                  "codDue" : {
+                    "type" : "object",
+                    "properties" : {
+                      "currencyCode" : {
+                        "type" : "string",
+                        "description": "ISO 4217"
+                      },
+                      "amount" : {
+                        "type" : "string",
+                        "description": "amount of COD due with appropriate precision"
+                      }
+                    }
+                  },
+                  "saleTotal" : {
+                    "type" : "object",
+                    "properties" : {
+                      "currencyCode" : {
+                        "type" : "string",
+                        "description": "ISO 4217"
+                      },
+                      "amount" : {
+                        "type" : "string",
+                        "description": "amount of sales total with appropriate precision"
+                      }
+                    }
+                  }
+                }
+              },
+              "scannableBarcode" : {
+                "type" : "string",
+                "description": "embedded string that is printed as a barcode on the package for scanning purposes."
+              },
+              "serviceFlags" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "enum": [
+                    "SIGNATURE_REQUIRED",
+                    "HIGH_VALUE",
+                    "UNATTENDED",
+                    "COD",
+                    "DELIVERY_DIFFICULT",
+                    "DELIVERY_PLUS",
+                    "COMPLEX_INSTALL",
+                    "TEAM_REQUIRED",
+                    "STOCK_REQUIRED",
+                    "TAKE_AWAY_OLD"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "codDue" : {
+      "type" : "object",
+      "required": [
+        "currencyCode",
+        "amount"
+      ],
+      "properties" : {
+        "currencyCode" : {
+          "type" : "string",
+          "description": "ISO 4217"
+        },
+        "amount" : {
+          "type" : "string",
+          "description": "amount of COD due with appropriate precision"
+        }
+      }
+    },
+    "saleTotal" : {
+      "type" : "object",
+      "required": [
+        "currencyCode",
+        "amount"
+      ],
+      "properties" : {
+        "currencyCode" : {
+          "type" : "string",
+          "description": "ISO 4217"
+        },
+        "amount" : {
+          "type" : "string",
+          "description": "amount of sales total with appropriate precision"
+        }
+      }
+    }
+  }
+}
