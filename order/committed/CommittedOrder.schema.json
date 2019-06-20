@@ -1,4 +1,6 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Committed Order",
   "description": "Customer Order submitted with intent of being immediately sent to fulfillment for planning/execution.",
   "required": [
     "committedTime",
