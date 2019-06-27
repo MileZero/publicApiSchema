@@ -184,6 +184,9 @@
         }
       }
     },
+    "smsEnabled" : {
+      "type": "boolean"
+    },
     "targetTimeRange" : {
       "type" : "object",
       "properties" : {
