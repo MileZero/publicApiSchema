@@ -1,0 +1,172 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Retrievable Order",
+  "description": "Customer Order representation.",
+  "type" : "object",
+  "required": [
+    "id",
+    "destLocationId",
+    "orderTime",
+    "orderItems",
+    "referenceId",
+    "contactId",
+    "deliveryOptionId",
+    "submitted",
+    "cancelled",
+    "deliveryTimeRange"
+  ],
+  "properties" : {
+    "id" : {
+      "type" : "string",
+      "description": "MileZero  order identifier."
+    },
+    "destLocationId" : {
+      "type" : "string"
+    },
+    "contactLocationId" : {
+      "type" : "string"
+    },
+    "defaultHubId" : {
+      "type" : "string"
+    },
+    "customerId" : {
+      "type" : "string"
+    },
+    "orderTime" : {
+      "type" : "string",
+      "description": "ISO-8601 formatted date time string"
+    },
+    "orderItems" : {
+      "type" : "object",
+      "properties" : {
+        "directProducts" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string"
+              },
+              "cod" : {
+                "type" : "object",
+                "properties" : {
+                  "currencyCode" : {
+                    "type" : "string",
+                    "description": "ISO 4217"
+                  },
+                  "amount" : {
+                    "type" : "string",
+                    "description": "amount of COD due with appropriate precision"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "dynamicProducts" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "typeId" : {
+                "type" : "string"
+              },
+              "quantity" : {
+                "type" : "integer"
+              },
+              "codPerProduct" : {
+                "type" : "object",
+                "properties" : {
+                  "currencyCode" : {
+                    "type" : "string",
+                    "description": "ISO 4217"
+                  },
+                  "amount" : {
+                    "type" : "string",
+                    "description": "amount of COD due with appropriate precision"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "referenceId" : {
+      "type" : "string",
+      "description": "Customer reference to order"
+    },
+    "contactId" : {
+      "type" : "string"
+    },
+    "orderNotes" : {
+      "type" : "string"
+    },
+    "deliveryOptionId" : {
+      "type" : "string"
+    },
+    "submitted" : {
+      "type" : "boolean"
+    },
+    "cancelled" : {
+      "type" : "boolean"
+    },
+    "deliveryTimeRange" : {
+      "type" : "object",
+      "required": [
+        "beginning",
+        "ending"
+      ],
+      "properties" : {
+        "beginning" : {
+          "type" : "string",
+          "description": "ISO-8601 formatted date time string"
+        },
+        "ending" : {
+          "type" : "string",
+          "description": "ISO-8601 formatted date time string"
+        }
+      }
+    },
+    "packages" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "packageId" : {
+            "type" : "string"
+          },
+          "providerName" : {
+            "type" : "string"
+          },
+          "trackingId" : {
+            "type" : "string"
+          },
+          "providerService" : {
+            "type" : "string"
+          },
+          "packageStatus" : {
+            "type" : "string"
+          },
+          "deliveryStatus" : {
+            "type" : "string"
+          },
+          "codAmount" : {
+            "type" : "object",
+            "properties" : {
+              "currencyCode" : {
+                "type" : "string",
+                "description": "ISO 4217"
+              },
+              "amount" : {
+                "type" : "string",
+                "description": "amount of COD due with appropriate precision"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
