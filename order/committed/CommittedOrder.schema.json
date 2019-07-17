@@ -228,9 +228,7 @@
                   "type" : {
                     "type" : "object",
                     "required": [
-                      "referenceId",
-                      "size",
-                      "weight"
+                      "referenceId"
                     ],
                     "properties" : {
                       "referenceId" : {
