@@ -341,6 +341,20 @@
                     "TAKE_AWAY_OLD"
                   ]
                 }
+              },
+              "shipmentWindow" : {
+                "type" : "object",
+                "description": "Window for shipment line item, if omitted will apply the targetTimeRange at the order level.",
+                "properties" : {
+                  "beginning" : {
+                    "type" : "string",
+                    "description": "ISO-8601 formatted date time string"
+                  },
+                  "ending" : {
+                    "type" : "string",
+                    "description": "ISO-8601 formatted date time string"
+                  }
+                }
               }
             }
           }
