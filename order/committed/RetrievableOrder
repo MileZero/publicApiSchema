@@ -2,28 +2,11 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Retrievable Order",
   "description": "Customer Order representation.",
-
-  "type" : "object",
-  "required": [
-    "items"
-  ],
-  "properties" : {
-    "offset" : {
-      "type" : "number"
-    },
-    "limit" : {
-      "type" : "integer"
-    },
-    "total" : {
-      "type" : "number"
-    },
-    "items" : {
-      "type" : "array",
-      "items" : {
   "type" : "object",
   "required": [
     "id",
     "destLocationId",
+    "orderTime",
     "orderItems",
     "referenceId",
     "contactId",
@@ -86,6 +69,9 @@
             "type" : "object",
             "properties" : {
               "typeId" : {
+                "type" : "string"
+              },
+              "typeReferenceId" : {
                 "type" : "string"
               },
               "quantity" : {
@@ -185,9 +171,4 @@
       }
     }
   }
-      }
-    }
-  }
 }
-
-
