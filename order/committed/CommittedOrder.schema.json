@@ -8,7 +8,6 @@
     "origin",
     "targetLocation",
     "targetContact",
-    "targetTimeRange",
     "items"
   ],
   "type" : "object",
@@ -189,6 +188,10 @@
     },
     "targetTimeRange" : {
       "type" : "object",
+      "required":[
+        "beginning",
+        "ending"
+      ],
       "properties" : {
         "beginning" : {
           "type" : "string",
