@@ -205,7 +205,11 @@
     },
     "orderNotes" : {
       "type" : "string",
-      "description": "custom notes on order that is passed to delivery association"
+      "description": "custom notes on order that is passed to delivery associate"
+    },
+    "fulfillmentNotes" : {
+      "type" : "string",
+      "description": "custom notes on order that is passed to delivery associate for purposes of the delivery."
     },
     "items" : {
       "type" : "object",
@@ -358,6 +362,10 @@
                     "description": "ISO-8601 formatted date time string"
                   }
                 }
+              },
+              "orderNotes" : {
+                "type" : "string",
+                "description": "custom notes on order that is passed to delivery associate"
               }
             }
           }
