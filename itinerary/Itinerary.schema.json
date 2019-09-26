@@ -1,0 +1,490 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Driver Itinerary",
+  "description": "Itinerary intended for Driver execution.  A SOP for work to be done by driver.",
+  "required": [
+    "generatedTime",
+    "assignedDriverId",
+    "routeName",
+    "taskGroups"
+  ],
+  "type" : "object",
+  "properties" : {
+    "generatedTime" : {
+      "description": "ISO-8601 formatted date time string",
+      "type" : "string"
+    },
+    "id" : {
+      "description": "Unique identifier for this particular itinerary",
+      "type" : "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "assignedDriverId" : {
+      "description": "Unique Milezero identifier for the driver assigned to this itinerary",
+      "type" : "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "assignedDriverReferenceId" : {
+      "description": "Unique Partner identifier for the driver assigned to this itinerary",
+      "type" : "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "routeName" : {
+      "description": "Visual name for route, not unique across shifts",
+      "type" : "string",
+      "minLength": 1
+    },
+    "status" : {
+      "description": "Mode of the itinerary: EXECUTED or PUBLISHED",
+      "type" : "string"
+    },
+    "taskGroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "tasks"
+        ],
+        "description": "Itinerary Stop",
+        "properties": {
+          "tasks": {
+            "description": "Tasks composing of the current stop.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "required": {
+                  "type": "boolean"
+                },
+                "prerequisiteTaskIds": {
+                  "type": "array",
+                  "description": "Previous tasks that should be completed before the current one.",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "originatingOrderIds": {
+                  "type": "array",
+                  "description": "order IDs ",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "executionWindow": {
+                    "description": "range of time that task needs to be completed in, so that all packages can meet the plan.",
+                    "type": "object",
+                    "properties": {
+                      "beginning": {
+                        "description": "ISO-8601 formatted date time string",
+                        "type": "string"
+                      },
+                      "ending": {
+                        "description": "ISO-8601 formatted date time string",
+                        "type": "string"
+                      }
+                    }
+                },
+                "eventName": {
+                  "type": "string"
+                },
+                "productPayload": {
+                  "type": "array",
+                  "description": "products which are the object of the current task",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "trackingId": {
+                        "type": "string"
+                      },
+                      "scannableId": {
+                        "type": "string"
+                      },
+                      "clientShipmentId": {
+                        "type": "string"
+                      },
+                      "attemptCount": {
+                        "type": "integer"
+                      },
+                      "stopScannableId": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "object",
+                        "properties": {
+                          "length": {
+                            "type": "number"
+                          },
+                          "width": {
+                            "type": "number"
+                          },
+                          "depth": {
+                            "type": "number"
+                          },
+                          "unit": {
+                            "type": "string",
+                            "enum": ["ft","in","yd","mi","m","mm","cm","km"]
+                          },
+                        }
+                      },
+                      "weight": {
+                        "type": "object",
+                        "properties": {
+                          "weightVal": {
+                            "type": "number"
+                          },
+                          "unit": {
+                            "type": "string",
+                            "enum": ["lb","ton_us","kg","g"]
+                          }
+                        }
+                      },
+                      "referenceId": {
+                        "type": "string"
+                      },
+                      "typeId": {
+                        "type": "string"
+                      },
+                      "typeReferenceId": {
+                        "type": "string"
+                      },
+                      "cod": {
+                        "type": "object",
+                        "properties": {
+                          "currencyCode": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "string",
+                            "description": "value of COD with appropriate precision"
+                          }
+                        }
+                      },
+                      "territoryId": {
+                        "type": "string"
+                      },
+                      "clientCustomFields": {
+                        "type": "object",
+                        "properties": {
+                          "clientLabelBanner": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "serviceTypeDescription": {
+                        "type": "string"
+                      },
+                    }
+                  }
+                },
+                "assetPayload": {
+                  "type": "array",
+                  "description": "assets which are the object of the current task",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "trackingId": {
+                        "type": "string"
+                      },
+                      "scannableId": {
+                        "type": "string"
+                      },
+                      "clientShipmentId": {
+                        "type": "string"
+                      },
+                      "orderReferenceId": {
+                        "type": "string"
+                      },
+                      "attemptCount": {
+                        "type": "integer"
+                      },
+                      "stopScannableId": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "object",
+                        "properties": {
+                          "length": {
+                            "type": "number"
+                          },
+                          "width": {
+                            "type": "number"
+                          },
+                          "depth": {
+                            "type": "number"
+                          },
+                          "unit": {
+                            "type": "string",
+                            "enum": ["ft","in","yd","mi","m","mm","cm","km"]
+                          },
+                        }
+                      },
+                      "weight": {
+                        "type": "object",
+                        "properties": {
+                          "weightVal": {
+                            "type": "number"
+                          },
+                          "unit": {
+                            "type": "string",
+                            "enum": ["lb","ton_us","kg","g"]
+                          }
+                        }
+                      },
+                      "referenceId": {
+                        "type": "string"
+                      },
+                      "typeId": {
+                        "type": "string"
+                      },
+                      "typeReferenceId": {
+                        "type": "string"
+                      },
+                      "cod": {
+                        "type": "object",
+                        "properties": {
+                          "currencyCode": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "string",
+                            "description": "value of COD with appropriate precision"
+                          }
+                        }
+                      },
+                      "containedProducts": {
+                        "type": "array"
+                      },
+                      "containedAssets": {
+                        "type": "array"
+                      },
+                      "territoryId": {
+                        "type": "string"
+                      },
+                      "clientCustomFields": {
+                        "type": "object",
+                        "properties": {
+                          "clientLabelBanner": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "serviceTypeDescription": {
+                        "type": "string"
+                      },
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "contact": {
+            "description": "Person of contact for the task",
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "description": "identifier for the contact",
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              }
+            }
+          },
+          "location": {
+            "description": "Location of the task",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "identifier for the location",
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "position": {
+                "type": "object",
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "description": "geocode of location",
+                "properties": {
+                  "latitude": {
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180
+                  }
+                }
+              },
+              "address" : {
+                "type": "object",
+                "required": [
+                  "countryCode",
+                  "addressLines"
+                ],
+                "description": "only used if location type is ADDRESS or UNVALIDATED",
+                "properties": {
+                  "countryCode": {
+                    "type": "string",
+                    "description": "standard: ISO 3166-1 alpha-2.  Indicates form of address"
+                  },
+                  "addressLines": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "used with US/AU/AE/GB country code.  address lines",
+                    "minLength": 1,
+                    "maxLength": 3
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "used with/required for US/AU/AE country code.  Territory/province/state code."
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "description": "used with/required for US/AU/GB country code.  postal/zip code"
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "used with/required for US/AU/AE country code.  Name of city"
+                  },
+                  "postTown": {
+                    "type": "string",
+                    "description": "used with/required for GB country code.  Name of town"
+                  },
+                  "dependentLocality": {
+                    "type": "string",
+                    "description": "used with GB country code.  large village name"
+                  },
+                  "doubleDependentLocality": {
+                    "type": "string",
+                    "description": "used with GB country code.  small village name"
+                  }
+                }
+              },
+              "countryCode": {
+                "type": "string"
+              },
+              "timeZone": {
+                "type": "string"
+              },
+              "commercialType": {
+                "type": "string",
+                "enum": ["RESIDENTIAL", "BUSINESS"]
+              },
+              "attributes": {
+                "type": "object",
+                "properties": {
+                  "stairs": {
+                    "type": "boolean"
+                  },
+                  "restrictedParking": {
+                    "type": "boolean"
+                  },
+                  "serviceLift": {
+                    "type": "boolean"
+                  },
+                  "sideRearAccess": {
+                    "type": "boolean"
+                  },
+                  "stairs": {
+                    "type": "boolean"
+                  },
+                }
+              }
+            }
+          },
+          "groupPromises": {
+            "description": "List of Customer Promises for items in the Task",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "orderId",
+                "offerId",
+                "executionWindow"
+              ],
+              "description": "",
+              "properties": {
+                "orderId": {
+                  "description": "Milezero order identifier",
+                  "type": "string"
+                },
+                "orderReferenceId": {
+                  "description": "Partner order identifier",
+                  "type": "string"
+                },
+                "offerId": {
+                  "description": "Identifier for promised offer.",
+                  "type": "string"
+                },
+                "orderNotes": {
+                  "description": "Notes provided by order for display to drivers.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "executionWindow": {
+                  "description": "range of time that task needs to be completed in, so that all packages can meet the plan.",
+                  "type": "object",
+                  "properties": {
+                    "beginning": {
+                      "description": "ISO-8601 formatted date time string",
+                      "type": "string"
+                    },
+                    "ending": {
+                      "description": "ISO-8601 formatted date time string",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "taskGroupingId": {
+            "description": "Id such that stops  with the same value can be completed in any order.",
+            "type": "string"
+          }
+        }
+      },
+      "description": "Stops of the itinerary"
+    }
+  }
+}
