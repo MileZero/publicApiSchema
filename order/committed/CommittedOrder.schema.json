@@ -363,7 +363,7 @@
                   }
                 }
               },
-              "orderNotes" : {
+              "shipmentNotes" : {
                 "type" : "string",
                 "description": "custom notes on order that is passed to delivery associate"
               }
